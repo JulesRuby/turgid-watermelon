@@ -8,13 +8,13 @@ export default createStore({
   state() {
     return {
       apiKey: '',
-      baseUrl: 'http://www.omdbapi.com/?apikey=',
+      baseUrl: 'https://www.omdbapi.com/?apikey=',
       hasSearched: false,
       searchParams: {
         title: '',
         year: null,
         type: 'movie', // Will remain static as assignment specifies
-        page: 1,
+        page: 1
       },
       results: [],
       totalResults: null,
