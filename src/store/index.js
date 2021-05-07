@@ -1,12 +1,31 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+
+import mutations from './mutations';
+import actions from './actions';
+import getters from './getters';
 
 export default createStore({
-  state: {
+  state() {
+    return {
+      apiKey: '',
+      baseUrl: 'http://www.omdbapi.com/?apikey=',
+      hasSearched: false,
+      searchParams: {
+        title: '',
+        year: null,
+        type: 'movie', // Will remain static as assignment specifies
+        page: 1,
+      },
+      results: [],
+      totalResults: null,
+      stepperArray: [],
+      maxPages: null,
+      resultsPerPage: null,
+      movieDetails: {},
+      nominations: []
+    };
   },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+  mutations,
+  actions,
+  getters
+});

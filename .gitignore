@@ -21,3 +21,8 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+requirements.md
+jsconfig.json
+
+src/components/ui/v-fer-sure.vue
