@@ -9,7 +9,17 @@
         </p>
       </template>
       <template #actions>
-        <base-button @click="handleAlert">Submit</base-button>
+        <!-- This would confirm a nomination and lock it in, but without a backend to really commit data to and associate it with a specific key. I'll just redirect to the thank you page. -->
+        <base-button
+          @click="
+            () => {
+              handleAlert((clear = true));
+            }
+          "
+          link
+          to="/thankyou"
+          >Submit</base-button
+        >
         <base-button @click="handleAlert" link to="/nominations"
           >Review</base-button
         >
@@ -77,8 +87,11 @@ export default {
         this.maxAlert = true;
       }
     },
-    handleAlert() {
+    handleAlert(clear = false) {
       this.maxAlert = false;
+      if (clear === true) {
+        this.$store.dispatch('clearStore');
+      }
     },
   },
 };

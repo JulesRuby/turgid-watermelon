@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import SearchPage from '../views/SearchPage.vue';
 import NominationsPage from '../views/NominationsPage.vue';
 import MovieDetails from '../views/MovieDetails.vue';
+import ThankYou from '../views/ThankYou.vue';
 import NotFound from '../views/NotFound.vue';
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
     path: '/nominations',
     name: 'NominationsPage',
     component: NominationsPage,
+  },
+  {
+    path: '/thankyou',
+    name: 'ThankYou',
+    component: ThankYou,
   },
   {
     path: '/:notFound(.*)',

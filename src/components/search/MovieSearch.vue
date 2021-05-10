@@ -75,7 +75,7 @@ export default {
 <style scoped>
 h2,
 p {
-  margin: 0.75rem 0;
+  margin: 0.75rem auto;
 }
 
 form {

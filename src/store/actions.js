@@ -74,9 +74,10 @@ export default {
 
     const responseData = await response.json();
 
-    if (!response.ok) {
-      return;
-    }
+    // focus on just the client
+    // if (!response.ok) {
+    //   return;
+    // }
 
     const { totalResults } = responseData;
     const results = responseData.Search;
@@ -93,10 +94,10 @@ export default {
     let nominations = context.getters.getNominations;
 
     // fallback check, but handled in component... so may not need
-    if (nominations.length === 5) {
-      alert('Maximum 5 nominations');
-      return;
-    }
+    // if (nominations.length === 5) {
+    //   alert('Maximum 5 nominations');
+    //   return;
+    // }
 
     nominations = [...nominations, payload];
     context.commit('setNominations', nominations);
@@ -119,5 +120,29 @@ export default {
       payload = payload.imdbID; // payload only requires the id to filter
       context.dispatch('withdrawMovie', payload);
     }
+  },
+
+  clearStore(context) {
+    // this is a bit ungainly, but I can make this better later perhaps
+    const payload = {
+      apiKey: '',
+      baseUrl: 'https://www.omdbapi.com/?apikey=',
+      hasSearched: false,
+      searchParams: {
+        title: '',
+        year: null,
+        type: 'movie', // Will remain static as assignment specifies
+        page: 1
+      },
+      results: [],
+      totalResults: null,
+      stepperArray: [],
+      maxPages: null,
+      resultsPerPage: null,
+      movieDetails: {},
+      nominations: []
+    };
+
+    context.commit('setClearStore', payload);
   }
 };

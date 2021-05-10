@@ -1,90 +1,94 @@
 <template>
-  <router-link to="/search">Return to search page</router-link>
-  <base-card>
-    <h1>Movie details</h1>
-    <article v-if="!isLoading">
-      <header>
-        <h2>{{ movie.Title }}</h2>
-        <base-button>Nominate</base-button>
-        <ul class="row">
-          <li>{{ movie.Released }}</li>
-          <li>{{ movie.Runtime }}</li>
-          <li>Rated {{ movie.Rated }}</li>
-        </ul>
-      </header>
+  <section>
+    <router-link to="/search">Return to search page</router-link>
+    <base-card>
+      <h1>Movie details</h1>
+      <article v-if="!isLoading">
+        <header>
+          <h2>{{ movie.Title }}</h2>
+          <!-- <base-button>Nominate</base-button> -->
+          <ul class="row">
+            <li>{{ movie.Released }}</li>
+            <li>{{ movie.Runtime }}</li>
+            <li>Rated {{ movie.Rated }}</li>
+          </ul>
+        </header>
 
-      <div class="grid">
-        <img
-          v-if="poster"
-          :src="movie.Poster ? movie.Poster : null"
-          :alt="altText"
-          width="300"
-          height="425"
-        />
+        <div class="grid">
+          <img
+            v-if="poster"
+            :src="movie.Poster ? movie.Poster : null"
+            :alt="altText"
+            width="300"
+            height="425"
+          />
 
-        <img
-          v-else
-          src="../assets/poster-na.svg"
-          alt="Movie poster image unavailable."
-          height="100"
-          width="75"
-        />
+          <img
+            v-else
+            src="../assets/poster-na.svg"
+            alt="Movie poster image unavailable."
+            height="100"
+            width="75"
+          />
 
-        <ul class="column ratings">
-          <li v-for="(rating, index) in movie.Ratings" :key="index">
-            <span class="bold">{{ rating.Source }}</span>
-            <span>{{ rating.Value }}</span>
-          </li>
-          <li class="column">
-            <span class="bold">Metascore</span>
-            <span>{{ movie.Metascore }}</span>
-          </li>
-        </ul>
+          <ul class="column ratings">
+            <li v-for="(rating, index) in movie.Ratings" :key="index">
+              <span class="bold">{{ rating.Source }}</span>
+              <span>{{ rating.Value }}</span>
+            </li>
+            <li class="column">
+              <span class="bold">Metascore</span>
+              <span>{{ movie.Metascore }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <base-badge
+            v-for="(genre, index) in genreArray"
+            :key="index"
+            class="badge"
+            >{{ genre }}</base-badge
+          >
+        </div>
+
+        <p>{{ movie.Plot }}</p>
+
+        <details>
+          <summary><strong>Top Credits</strong></summary>
+          <ul class="details-ul">
+            <li><span class="bold">Director:</span> {{ movie.Director }}</li>
+            <li><span class="bold">Writers:</span> {{ movie.Writer }}</li>
+            <li><span class="bold">Stars:</span> {{ movie.Actors }}</li>
+          </ul>
+        </details>
+
+        <details>
+          <summary><strong>Additional Information:</strong></summary>
+          <ul class="details-ul">
+            <li><span class="bold">Awards:</span> {{ movie.Awards }}</li>
+            <li>
+              <span class="bold">Production:</span> {{ movie.Production }}
+            </li>
+            <li><span class="bold">Box Office:</span> {{ movie.BoxOffice }}</li>
+            <li><span class="bold">Country:</span> {{ movie.Country }}</li>
+            <li><span class="bold">DVD Release:</span> {{ movie.DVD }}</li>
+            <li>
+              <span class="bold">Website:</span>
+              <a v-if="movie.Website !== 'N/A'" :href="movie.Website">{{
+                movie.Website
+              }}</a>
+              <span v-else> No website listed.</span>
+            </li>
+          </ul>
+        </details>
+      </article>
+      <div v-else>
+        <base-spinner></base-spinner>
       </div>
-
-      <div>
-        <base-badge
-          v-for="(genre, index) in genreArray"
-          :key="index"
-          class="badge"
-          >{{ genre }}</base-badge
-        >
-      </div>
-
-      <p>{{ movie.Plot }}</p>
-
-      <details>
-        <summary><strong>Top Credits</strong></summary>
-        <ul class="details-ul">
-          <li><span class="bold">Director:</span> {{ movie.Director }}</li>
-          <li><span class="bold">Writers:</span> {{ movie.Writer }}</li>
-          <li><span class="bold">Stars:</span> {{ movie.Actors }}</li>
-        </ul>
-      </details>
-
-      <details>
-        <summary><strong>Additional Information:</strong></summary>
-        <ul class="details-ul">
-          <li><span class="bold">Awards:</span> {{ movie.Awards }}</li>
-          <li><span class="bold">Production:</span> {{ movie.Production }}</li>
-          <li><span class="bold">Box Office:</span> {{ movie.BoxOffice }}</li>
-          <li><span class="bold">Country:</span> {{ movie.Country }}</li>
-          <li><span class="bold">DVD Release:</span> {{ movie.DVD }}</li>
-          <li>
-            <span class="bold">Website:</span>
-            <a v-if="movie.Website !== 'N/A'" :href="movie.Website">{{
-              movie.Website
-            }}</a>
-            <span v-else> No website listed.</span>
-          </li>
-        </ul>
-      </details>
-    </article>
-    <div v-else>
-      <base-spinner></base-spinner>
-    </div>
-  </base-card>
-  <router-link to="/search">Return to search page</router-link>
+    </base-card>
+    <router-link to="/search">Return to search page</router-link>
+  </section>
 </template>
 
 <script>
@@ -106,6 +110,9 @@ export default {
     },
     poster() {
       return this.movie.Poster !== 'N/A' ? true : false;
+    },
+    home() {
+      return this.$router;
     },
   },
   created() {
@@ -131,6 +138,21 @@ export default {
       const newThang = string.replace(exp, replacement);
 
       this.movie.Actors = newThang;
+    },
+
+    handleNominate(isNominated) {
+      const payload = {
+        isNominated,
+        imdbID: this.imdbID,
+        title: this.title,
+        year: this.year,
+        type: this.type,
+        poster: this.poster,
+      };
+
+      this.$store.dispatch('handleNomination', payload);
+
+      this.$emit('check');
     },
   },
 };

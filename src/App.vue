@@ -1,12 +1,12 @@
 <template>
   <app-header></app-header>
-  <main>
-    <router-view v-slot="{ Component }">
+  <router-view v-slot="{ Component }">
+    <main>
       <transition name="route" mode="out-in">
         <component :is="Component"></component>
       </transition>
-    </router-view>
-  </main>
+    </main>
+  </router-view>
   <app-footer></app-footer>
 </template>
 

@@ -8,9 +8,9 @@
       :max-pages="100"
       :step-range="5"
     >
-      <!-- <ul> -->
-      <!-- v-bind="$attrs from SearchPage to access checkNominations" -->
-      <transition-group tag="ul" mode="out-in" name="make-list">
+      <ul>
+        <!-- v-bind="$attrs from SearchPage to access checkNominations" -->
+        <!-- <transition-group tag="ul" mode="out-in" name="make-list"> -->
         <result-card
           v-bind="$attrs"
           v-for="result in results"
@@ -22,8 +22,8 @@
           :poster="result.Poster"
           :nominations="nominations"
         ></result-card>
-      </transition-group>
-      <!-- </ul> -->
+        <!-- </transition-group> -->
+      </ul>
     </results-paginator>
     <p v-else>No results were found.</p>
   </section>
@@ -53,12 +53,15 @@ export default {
 </script>
 
 <style scoped>
-.appear-enter-from {
+p {
+  margin: var(--sp-2) auto;
+}
+/* .appear-enter-from {
   opacity: 0;
   transform: translateX(3rem);
-}
+} */
 
-.appear-leave-from {
+/* .appear-leave-from {
   opacity: 1;
   transform: translateX(0);
 }
@@ -112,5 +115,5 @@ export default {
 
 .make-list-move {
   transition: transform 200ms ease;
-}
+} */
 </style>

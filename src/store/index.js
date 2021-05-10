@@ -7,7 +7,7 @@ import getters from './getters';
 export default createStore({
   state() {
     return {
-      apiKey: '8b6c5211',
+      apiKey: '',
       baseUrl: 'https://www.omdbapi.com/?apikey=',
       hasSearched: false,
       searchParams: {

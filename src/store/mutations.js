@@ -31,5 +31,18 @@ export default {
   },
   setMovieDetails(state, payload) {
     state.movieDetails = payload;
+  },
+  setClearStore(state, payload) {
+   state.apiKey = payload.apiKey;
+   state.baseUrl = payload.baseUrl;
+   state.hasSearched = payload.hasSearched;
+   state.searchParams = payload.searchParams;
+   state.results = payload.results;
+   state.totalResults = payload.totalResults;
+   state.stepperArray = payload.stepperArray;
+   state.maxPages = payload.maxPages;
+   state.resultsPerPage = payload.resultsPerPage;
+   state.movieDetails = payload.movieDetails;
+   state.nominations = payload.nominations;
   }
 };
