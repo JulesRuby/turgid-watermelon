@@ -44,45 +44,11 @@ html {
   /* set document font-size to fluid rem, now 1rem scales with viewport */
   font-size: var(--fluid-rem);
 
-  /* a6cfd5 light blue */
-  /* daffed 151, 100%, 93% aero blue */
-  /* 161925 228, 25%, 12% rich b fogra 29 */
-  /* d4d2d5 280, 3%, 83% light gray */
-  /* f7f7ff 240, 100%, 98% ghost white */
-  /* fffff2 ivory 60, 100%, 97% */
-  /* ffa400 39, 100%, 50% orange web */
-  /* f6ae2d  honey yellow*/
-  /* d16014  tenne twany*/
-  /* ff7d00 amber something */
-  /* fa9f42 deep saffron */
-  /* ef767a 358, 79%, 70% light coral */
-  /* f56476 fiery rose */
-
-  /* Colors, I guess */
-  /* --primary: hsla(60, 100%, 97%, 1); */
-  --primary: hsla(60, 100%, 97%, 1);
-  /* --secondary: hsla(228, 25%, 12%, 1); */
-  --secondary: hsla(228, 25%, 12%, 1);
-  /* --tertiary: hsla(39, 100%, 50%, 1); */
-  --tertiary: hsla(39, 100%, 50%, 1);
-
   /* ivory */
   --prim-h: 60;
   --prim-s: 100%;
   --prim-l: 97%;
   --prim-a: 1;
-
-  /* light gray */
-  /* --prim-h: 280;
-  --prim-s: 3%;
-  --prim-l: 83%;
-  --prim-a: 1; */
-
-  /* ghost white */
-  /* --prim-h: 240;
-  --prim-s: 100%;
-  --prim-l: 98%;
-  --prim-a: 1; */
 
   --sec-h: 228;
   --sec-s: 25%;
@@ -214,11 +180,7 @@ body {
 
   min-height: 100vh;
 
-  /* color: var(--secondary); */
   text-align: center;
-  /* font-family: 'Roboto Mono', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
 }
 
 h1 {
@@ -321,7 +283,7 @@ main > * {
   transform: translateX(-3rem);
 }
 
-/* .route-move {
+.route-move {
   transition: transform 200ms ease;
-} */
+}
 </style>

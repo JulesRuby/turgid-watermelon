@@ -82,7 +82,6 @@ export default {
     const { totalResults } = responseData;
     const results = responseData.Search;
 
-    // context.commit('setHasSearched');
     context.commit('setResults', {
       results,
       totalResults
@@ -92,12 +91,6 @@ export default {
 
   nominateMovie(context, payload) {
     let nominations = context.getters.getNominations;
-
-    // fallback check, but handled in component... so may not need
-    // if (nominations.length === 5) {
-    //   alert('Maximum 5 nominations');
-    //   return;
-    // }
 
     nominations = [...nominations, payload];
     context.commit('setNominations', nominations);

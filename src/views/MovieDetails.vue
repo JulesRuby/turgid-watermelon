@@ -217,8 +217,6 @@ article > * + * {
   display: flex;
   justify-content: stretch;
   justify-items: stretch;
-
-  /* padding: var(--sp-3) 0; */
 }
 
 .row > li {
@@ -232,8 +230,6 @@ article > * + * {
 
 .grid {
   display: grid;
-  /* Probably unnecessary for this, but I'll keep it here in case my needs evolve. */
-  /* grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); */
   grid-template-columns: minmax(100px, 300px) 1fr;
   grid-gap: var(--gap, 1rem);
 }

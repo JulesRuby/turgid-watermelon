@@ -13,7 +13,6 @@
       <label for="apiKey">Your API key:</label>
     </div>
     <div v-if="hasApiKey" class="form-control">
-      <!-- <input type="text" id="movieTitle" v-model="movieTitle" /> -->
       <input type="text" id="movieTitle" v-model="title" />
       <label for="movieTitle">Movie Title:</label>
     </div>
@@ -67,7 +66,6 @@ export default {
       } else {
         this.checkTitle();
         // convert empty strong year to null to avoid borking the searches
-        // y=& will not work, though y=null& will
         // honestly I'm just going to coerce any sort of ridiculous year query into null, for now
         if (formData.year !== null && formData.year.length !== 4) {
           formData.year = null;
