@@ -4,6 +4,9 @@
     If you don't have an API key, you can obtain one easily
     <a href="http://www.omdbapi.com/apikey.aspx">here</a>
   </p>
+  <base-modal :show="!!error" title="Input error" @close="confirmError">{{
+    error
+  }}</base-modal>
   <form @submit.prevent="submitForm">
     <div v-if="!hasApiKey" class="form-control">
       <input type="text" id="apiKey" v-model.trim="apiKey" />
@@ -15,7 +18,7 @@
       <label for="movieTitle">Movie Title:</label>
     </div>
     <div v-if="hasApiKey" class="form-control checkbox-group">
-      <input type="number" id="year" v-model.trim="year" min="1900" />
+      <input type="number" id="year" v-model.trim="year" />
       <label for="year">Year:</label>
     </div>
     <base-button>{{ submitCaption }}</base-button>
@@ -27,11 +30,12 @@ export default {
   emits: ['emit-search', 'emit-key'],
   data() {
     return {
-      isValid: true,
+      error: null,
+      // isValid: true,
       apiKey: '',
-      // movieTitle: '',
       title: '',
       year: null,
+      formValid: true,
     };
   },
   computed: {
@@ -51,22 +55,49 @@ export default {
     submitForm(e, page) {
       const apiKey = this.apiKey;
       let formData = {
-        // movieTitle: this.movieTitle,
         title: this.title,
         year: this.year,
         page: page || 1,
       };
 
       if (!this.hasApiKey) {
+        this.checkApiKey();
+
         this.$emit('emit-key', apiKey);
       } else {
+        this.checkTitle();
         // convert empty strong year to null to avoid borking the searches
         // y=& will not work, though y=null& will
-        if (formData.year === '') {
+        // honestly I'm just going to coerce any sort of ridiculous year query into null, for now
+        if (formData.year !== null && formData.year.length !== 4) {
           formData.year = null;
         }
         this.$emit('emit-search', formData);
       }
+    },
+
+    checkTitle() {
+      this.formValid = true;
+
+      if (this.title === '') {
+        this.error = 'You must enter a movie title';
+        this.formValid = false;
+        return;
+      }
+    },
+
+    checkApiKey() {
+      this.formValid = true;
+
+      if (this.apiKey.length !== 8) {
+        this.error = 'Your API key should be 8 characters in length';
+        this.formValid = false;
+        return;
+      }
+    },
+
+    confirmError() {
+      this.error = null;
     },
   },
 };
@@ -100,13 +131,6 @@ label {
   left: 0.5rem;
 }
 
-/*
-input {
-  padding: 1.75rem 0.75rem 0.75rem;
-  border: 2px inset gray;
-  border-radius: 5px;
-} */
-
 input {
   --border-type: none;
 }
@@ -124,5 +148,4 @@ input:focus {
   box-shadow: 0 0 6px hsla(var(--sec-h), var(--sec-s), var(--sec-l), 0.2);
   background-color: var(--primary20);
 }
-
 </style>
