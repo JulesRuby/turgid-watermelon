@@ -1,4 +1,5 @@
 <template>
+<!-- Throw some social icons in here later -->
   <footer>A fing I made &copy; 2021</footer>
 </template>
 

@@ -34,7 +34,6 @@ button,
 a {
   display: inline-block;
   margin-right: 0.5rem;
-  /* padding: 0.5rem 1.25rem; */
   padding: var(--pad-y, 0.5rem) var(--pad-x, 1.25rem);
 
   font: inherit;
@@ -69,7 +68,6 @@ button:active {
 .outline {
   color: var(--secondary);
   background-color: transparent;
-  border-color: var(--tertiary10);
   border-color: var(--primary10);
 }
 

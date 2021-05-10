@@ -23,6 +23,7 @@
 </template>
 
 <script>
+// playing with more specific prop validation
 export default {
   name: 'BaseModal',
   props: {

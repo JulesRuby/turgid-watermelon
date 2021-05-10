@@ -10,6 +10,3 @@ export default {
   name: 'ThankYou',
 };
 </script>
-
-<style scoped>
-</style>

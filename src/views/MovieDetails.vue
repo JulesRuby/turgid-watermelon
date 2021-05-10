@@ -6,6 +6,7 @@
       <article v-if="!isLoading">
         <header>
           <h2>{{ movie.Title }}</h2>
+          <!-- Add this nominate button later,  -->
           <!-- <base-button>Nominate</base-button> -->
           <ul class="row">
             <li>{{ movie.Released }}</li>

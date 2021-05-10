@@ -74,7 +74,7 @@ export default {
 
     const responseData = await response.json();
 
-    // focus on just the client
+    // focus on just the client for now, I can throw response errors another time
     // if (!response.ok) {
     //   return;
     // }

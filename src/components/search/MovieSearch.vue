@@ -30,7 +30,6 @@ export default {
   data() {
     return {
       error: null,
-      // isValid: true,
       apiKey: '',
       title: '',
       year: null,
@@ -74,6 +73,7 @@ export default {
       }
     },
 
+    // I should maybe create a more universal function for these validation methods. This works for now, but the moment I would need more, it would get soggy.
     checkTitle() {
       this.formValid = true;
 

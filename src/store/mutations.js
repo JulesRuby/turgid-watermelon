@@ -32,6 +32,7 @@ export default {
   setMovieDetails(state, payload) {
     state.movieDetails = payload;
   },
+  // I hate this, find a better way
   setClearStore(state, payload) {
    state.apiKey = payload.apiKey;
    state.baseUrl = payload.baseUrl;

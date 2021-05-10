@@ -237,9 +237,6 @@ input:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-.bold {
-  font-weight: bold;
-}
 
 main {
   flex-grow: 1;
@@ -254,8 +251,8 @@ main {
   max-width: 45rem;
 }
 
-main > * {
-  /* width: 100%; */
+.bold {
+  font-weight: bold;
 }
 
 .route-enter-to,

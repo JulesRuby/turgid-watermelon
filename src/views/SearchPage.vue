@@ -1,6 +1,5 @@
 <template>
   <section>
-    <!-- <base-modal :show="maxNominations" title="Nominations Full"> -->
     <base-modal :show="maxAlert" title="Nominations Full" @close="handleAlert">
       <template #default>
         <p>

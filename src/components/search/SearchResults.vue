@@ -11,6 +11,7 @@
       <ul>
         <!-- v-bind="$attrs from SearchPage to access checkNominations" -->
         <!-- <transition-group tag="ul" mode="out-in" name="make-list"> -->
+        <!--Come back and take another swing at getting these list transitions to work. I believe they're being restricted by the conditional rendering of either the paginator, the loader, or maybe the root of this component itself, from the SearchPage.vue  -->
         <result-card
           v-bind="$attrs"
           v-for="result in results"

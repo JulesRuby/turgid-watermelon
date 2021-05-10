@@ -91,6 +91,7 @@ export default {
 </script>
 
 <style scoped>
+/* I think I really need to find a better solution to the layout of the results card. I was trying to keep it a bit learn by using grid, though I think without adding either containers/wrappers to the children, it will be... awkward */
 li {
   display: grid;
   grid-template-columns: minmax(4.5rem, 2fr) 5fr 2fr;
@@ -134,12 +135,6 @@ p {
   margin: 0 auto;
   --pad-x: var(--sp-1);
 }
-
-/* .withdraw {
-  color: var(--secondary);
-  background-color: var(--tertiary);
-  border-color: var(--tertiary);
-} */
 
 .result-options:last-of-type {
   align-self: end;
