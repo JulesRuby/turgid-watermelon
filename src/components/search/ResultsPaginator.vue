@@ -1,72 +1,79 @@
 <template>
   <div>
     <p>Displaying page: {{ currentPage }} of {{ storeCappedPages }}</p>
-    <ul>
-      <li>
-        <button
-          class="stepper"
-          @click="stepPage('previous')"
-          :disabled="currentParams.page === 1"
-        >
-          Previous
-        </button>
-      </li>
-      <li v-for="step in storeStepper" :key="step">
-        <button
-          class="pager"
-          :class="{ 'active-page': currentPage === step }"
-          @click="stepPage(null, step)"
-          :disabled="currentPage === step"
-        >
-          {{ step }}
-        </button>
-      </li>
+    <base-card>
+      <ul>
+        <li>
+          <button
+            class="stepper"
+            @click="stepPage('previous', null, $event)"
+            :disabled="currentParams.page === 1"
+          >
+            <!-- Previous -->
+          </button>
+        </li>
+        <li v-for="step in storeStepper" :key="step">
+          <button
+            class="pager"
+            :class="{ 'active-page': currentPage === step }"
+            @click="stepPage(null, step, $event)"
+            :disabled="currentPage === step"
+          >
+            {{ step }}
+          </button>
+        </li>
 
-      <li>
-        <button
-          class="stepper"
-          @click="stepPage('next', null)"
-          :disabled="currentParams.page === storePossiblePages"
-        >
-          Next
-        </button>
-      </li>
-    </ul>
+        <li>
+          <button
+            class="stepper"
+            @click="stepPage('next', null, $event)"
+            :disabled="currentParams.page === storePossiblePages"
+          >
+            <!-- Next -->
+          </button>
+        </li>
+      </ul>
+    </base-card>
+
     <!-- async the slotted data -->
     <slot v-if="!isLoading"></slot>
-    <!-- cat is the loader, for meow... -->
-    <!-- replace with a loader component/animation -->
-    <img v-else src="../../assets/cat-loader.jpg" alt="caaaaaat" />
-    <ul>
-      <li>
-        <button
-          class="stepper"
-          @click="stepPage('previous')"
-          :disabled="currentParams.page === 1"
-        >
-          Previous
-        </button>
-      </li>
-      <li v-for="step in storeStepper" :key="step">
-        <button
-          class="pager"
-          :class="{ 'active-page': currentPage === step }"
-          @click="stepPage(null, step)"
-        >
-          {{ step }}
-        </button>
-      </li>
 
-      <li>
-        <button
-          class="stepper"
-          @click="stepPage('next', null)"
-          :disabled="currentParams.page === storePossiblePages"
-        >
-          Next
-        </button>
-      </li>
-    </ul>
+    <div v-else>
+      <base-spinner></base-spinner>
+    </div>
+
+    <base-card>
+      <ul>
+        <li>
+          <button
+            class="stepper"
+            @click="stepPage('previous', null, $event)"
+            :disabled="currentParams.page === 1"
+          >
+            <!-- Previous -->
+          </button>
+        </li>
+        <li v-for="step in storeStepper" :key="step">
+          <button
+            class="pager"
+            :class="{ 'active-page': currentPage === step }"
+            @click="stepPage(null, step, $event)"
+          >
+            {{ step }}
+          </button>
+        </li>
+
+        <li>
+          <button
+            class="stepper"
+            @click="stepPage('next', null, $event)"
+            :disabled="currentParams.page === storePossiblePages"
+          >
+            <!-- Next -->
+          </button>
+        </li>
+      </ul>
+    </base-card>
   </div>
 </template>
 
@@ -112,11 +119,12 @@ export default {
     },
   },
   mounted() {
-    this.setLimits();
+    this.setLimits(); // set the stepper limits in Vuex
     this.$store.dispatch('stepper');
   },
   methods: {
-    async stepPage(direction, page) {
+    async stepPage(direction, page, event) {
+      event.target.blur(); // blur the stepper to return it's styling
       this.isLoading = true;
       // spread stored parameters
       let payload = {
@@ -152,24 +160,55 @@ export default {
 </script>
 
 <style scoped>
+p {
+  margin: var(--sp-1) auto;
+}
+
 ul {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+li {
+  margin: 0 1rem;
+  /* margin-right: 1rem; */
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+ul li:first-child {
+  margin-left: 0;
+  width: 1.25rem;
+  height: 2.25rem;
+  clip-path: polygon(100% 0, 100% 100%, 0 50%);
+}
+
+ul li:last-child {
+  margin-right: 0;
+  width: 1.25rem;
+  height: 2.25rem;
+  clip-path: polygon(0 0, 0% 100%, 100% 50%);
+}
+
 .stepper {
-  padding: 0.5rem 1rem;
+  width: 1.25rem;
+  height: 2.25rem;
 
-  width: 12ch;
-
-  color: white;
-  background-color: indigo;
+  background-color: var(--primary20);
 
   border: 0;
-  border-radius: 5px;
+  border-radius: 0;
 
   cursor: pointer;
+
+  transition: var(--default-trans);
+}
+
+.stepper:hover,
+.stepper:focus,
+.stepper:active {
+  background-color: var(--tertiary);
 }
 
 .stepper:disabled {
@@ -179,33 +218,39 @@ ul {
   cursor: default;
 }
 
-li {
-  margin: 0 1rem;
-  /* margin-right: 1rem; */
-}
-
-li:last-child {
-  margin-right: 0;
-}
-
 .pager {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
 
   font-size: 0.75rem;
+  color: var(--primary);
 
-  background-color: darksalmon;
+  background-color: var(--secondary10);
 
   border: 0;
   border-radius: 50%;
 
-  transition: transform 200ms ease-in-out;
+  transition: var(--default-trans);
   cursor: pointer;
 }
 
+.pager:hover,
+.pager:focus,
+.pager:active {
+  background-color: var(--tertiary20);
+}
+
 .active-page {
-  background-color: cyan;
-  transform: scale(1.4);
+  color: var(--primary);
+  background-color: var(--tertiary);
+  transform: scale(1.25);
   cursor: default;
+}
+
+.active-page:hover,
+.active-page:focus,
+.active-page:active {
+  background-color: var(--tertiary);
+  background-color: var(--tertiary);
 }
 </style>

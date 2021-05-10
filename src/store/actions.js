@@ -21,7 +21,6 @@ export default {
     let stepperArray = [];
 
     if (cappedPages < stepAllowance) {
-      // console.log('pages less than allowance');
       for (let step = 1; step <= cappedPages; step++) {
         stepperArray = [...stepperArray, step];
       }
@@ -38,7 +37,6 @@ export default {
     let finalValue = stepperArray[finalPosition];
     let diff = currentPage - medianValue;
 
-    // if (currentPage <= medianValue || !(cappedPages > finalValue)) {
     if (currentPage <= medianValue || finalValue >= cappedPages) {
       context.commit('setStepperArray', stepperArray);
       return;
@@ -62,8 +60,6 @@ export default {
     const apiKey = context.getters.getApiKey;
     const { title, year, page } = payload;
 
-    // console.log('actions.js - fetchMovies()', payload);
-
     context.dispatch('searchParams', {
       title,
       year,
@@ -79,7 +75,6 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      // console.log('Response not okay');
       return;
     }
 
@@ -95,10 +90,7 @@ export default {
   },
 
   nominateMovie(context, payload) {
-    // console.log('nominateMovie()', context, payload);
     let nominations = context.getters.getNominations;
-    // console.log('nominations', nominations);
-    // console.log('nominations.length', nominations.length);
 
     // fallback check, but handled in component... so may not need
     if (nominations.length === 5) {
@@ -107,18 +99,14 @@ export default {
     }
 
     nominations = [...nominations, payload];
-    // console.log('spread nominations', nominations);
     context.commit('setNominations', nominations);
   },
 
   withdrawMovie(context, payload) {
-    // console.log('withdrawMovie()', context, payload);
     let currNominees = context.getters.getNominations;
-    // console.log('currNominees', currNominees);
     let filteredNominees = currNominees.filter(
       nominee => nominee.imdbID !== payload
     );
-    // console.log('filteredNominees', filteredNominees);
 
     context.commit('setNominations', filteredNominees);
   },

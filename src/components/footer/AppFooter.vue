@@ -20,7 +20,7 @@ footer {
 
   height: 5rem;
 
-  color: var(--primary);
-  background-color: var(--secondary);
+  color: var(--secondary);
+  background-color: var(--primary);
 }
 </style>

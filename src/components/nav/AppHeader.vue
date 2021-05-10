@@ -1,16 +1,25 @@
 <template>
   <header>
     <nav>
-      <h1><router-link to="/">omdbAPI</router-link></h1>
+      <!-- <h1><router-link to="/">omdbAPI</router-link></h1> -->
+      <base-button link to="/"><h1>Reely</h1></base-button>
       <ul>
-        <li><router-link :to="{ name: 'SearchPage' }">Search</router-link></li>
-        <li>
+        <!-- <li><router-link :to="{ name: 'SearchPage' }">Search</router-link></li> -->
+        <li><base-button link mode="flat" to="/search">Search</base-button></li>
+        <!-- <li>
           <router-link to="/nominations">Nominations</router-link
           ><base-badge
             v-if="counter !== 0"
             mode="floating"
             :value="counter"
           ></base-badge>
+        </li> -->
+        <li>
+          <base-button link mode="flat" to="/nominations"
+            >Nominations</base-button
+          ><base-badge v-if="counter !== 0" mode="floating">{{
+            counter
+          }}</base-badge>
         </li>
       </ul>
     </nav>
@@ -34,7 +43,7 @@ header {
 
   height: 7rem;
 
-  background-color: var(--secondary);
+  background-color: var(--primary);
 }
 
 nav {
@@ -47,34 +56,27 @@ nav {
   padding: 1rem;
 }
 
-nav ul {
+ul {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-nav a {
-  display: inline-block;
-  padding: 0.75rem 1rem;
-
-  color: var(--secondary);
+/* nav a {
   font-weight: bold;
   text-decoration: none;
+} */
 
-  background-color: var(--tertiary);
-
-  border-radius: var(--b-radius5);
+a {
+  /* font-weight: bold; */
+  text-decoration: none;
 }
 
 ul a {
-  color: var(--primary);
-  background-color: var(--secondary);
-  transition: var(--default);
-}
-
-ul a:hover,
-ul a:active {
-  filter: brightness(160%);
+  margin-right: unset;
+  padding: 0.5rem 1rem;
+  color: var(--secondary);
+  transition: var(--default-trans);
 }
 
 li {

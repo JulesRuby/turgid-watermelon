@@ -100,28 +100,29 @@ label {
   left: 0.5rem;
 }
 
-label:focus {
-  color: green;
-}
-
+/*
 input {
   padding: 1.75rem 0.75rem 0.75rem;
   border: 2px inset gray;
   border-radius: 5px;
+} */
+
+input {
+  --border-type: none;
 }
 
+input:active,
 input:focus,
-input:active {
+input:active + label,
+input:focus + label {
   outline: 0;
+  color: var(--tertiary);
 }
 
 input:active,
 input:focus {
-  border-color: green;
+  box-shadow: 0 0 6px hsla(var(--sec-h), var(--sec-s), var(--sec-l), 0.2);
+  background-color: var(--primary20);
 }
 
-input:active + label,
-input:focus + label {
-  color: green;
-}
 </style>

@@ -1,7 +1,11 @@
 <template>
   <app-header></app-header>
   <main>
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <transition name="route" mode="out-in">
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
   </main>
   <app-footer></app-footer>
 </template>
@@ -55,15 +59,134 @@ html {
   /* f56476 fiery rose */
 
   /* Colors, I guess */
+  /* --primary: hsla(60, 100%, 97%, 1); */
   --primary: hsla(60, 100%, 97%, 1);
+  /* --secondary: hsla(228, 25%, 12%, 1); */
   --secondary: hsla(228, 25%, 12%, 1);
+  /* --tertiary: hsla(39, 100%, 50%, 1); */
   --tertiary: hsla(39, 100%, 50%, 1);
 
+  /* ivory */
+  --prim-h: 60;
+  --prim-s: 100%;
+  --prim-l: 97%;
+  --prim-a: 1;
+
+  /* light gray */
+  /* --prim-h: 280;
+  --prim-s: 3%;
+  --prim-l: 83%;
+  --prim-a: 1; */
+
+  /* ghost white */
+  /* --prim-h: 240;
+  --prim-s: 100%;
+  --prim-l: 98%;
+  --prim-a: 1; */
+
+  --sec-h: 228;
+  --sec-s: 25%;
+  --sec-l: 12%;
+  --sec-a: 1;
+
+  --tert-h: 39;
+  --tert-s: 100%;
+  --tert-l: 50%;
+  --tert-a: 1;
+
+  --primary: hsla(var(--sec-h), var(--sec-s), var(--sec-l), var(--sec-a));
+  --primary5: hsla(
+    var(--sec-h),
+    var(--sec-s),
+    calc(var(--sec-l) + 5%),
+    var(--sec-a)
+  );
+  --primary10: hsla(
+    var(--sec-h),
+    var(--sec-s),
+    calc(var(--sec-l) + 10%),
+    var(--sec-a)
+  );
+  --primary15: hsla(
+    var(--sec-h),
+    var(--sec-s),
+    calc(var(--sec-l) + 15%),
+    var(--sec-a)
+  );
+  --primary20: hsla(
+    var(--sec-h),
+    var(--sec-s),
+    calc(var(--sec-l) + 20%),
+    var(--sec-a)
+  );
+
+  --secondary: hsla(var(--prim-h), var(--prim-s), var(--prim-l), var(--prim-a));
+  --secondary5: hsla(
+    var(--prim-h),
+    var(--prim-s),
+    calc(var(--prim-l) - 5%),
+    var(--prim-a)
+  );
+  --secondary10: hsla(
+    var(--prim-h),
+    var(--prim-s),
+    calc(var(--prim-l) - 10%),
+    var(--prim-a)
+  );
+  --secondary15: hsla(
+    var(--prim-h),
+    var(--prim-s),
+    calc(var(--prim-l) - 15%),
+    var(--prim-a)
+  );
+  --secondary20: hsla(
+    var(--prim-h),
+    var(--prim-s),
+    calc(var(--prim-l) - 20%),
+    var(--prim-a)
+  );
+
+  --tertiary: hsla(var(--tert-h), var(--tert-s), var(--tert-l), var(--tert-a));
+  --tertiary5: hsla(
+    var(--tert-h),
+    var(--tert-s),
+    calc(var(--tert-l) + 5%),
+    var(--tert-a)
+  );
+  --tertiary10: hsla(
+    var(--tert-h),
+    var(--tert-s),
+    calc(var(--tert-l) + 10%),
+    var(--tert-a)
+  );
+  --tertiary15: hsla(
+    var(--tert-h),
+    var(--tert-s),
+    calc(var(--tert-l) + 15%),
+    var(--tert-a)
+  );
+  --tertiary20: hsla(
+    var(--tert-h),
+    var(--tert-s),
+    calc(var(--tert-l) + 20%),
+    var(--tert-a)
+  );
+
   /* UI Styles */
-  --b-radius5: 5px;
+  --sm-radius: 2px;
+  --m-radius: 5px;
 
   /* Transitions/Animations */
-  --default: all 200ms ease;
+  --default-trans: all 200ms ease;
+
+  /* Spacing */
+  --spacing: 1rem; /* base unit */
+
+  --sp-1: calc(var(--spacing) * 0.5);
+  --sp-2: calc(var(--spacing) * 0.75);
+  --sp-3: calc(var(--spacing) * 1);
+  --sp-4: calc(var(--spacing) * 1.25);
+  --sp-5: calc(var(--spacing) * 1.5);
 }
 
 *,
@@ -75,16 +198,13 @@ html {
 }
 
 body {
-  background-color: var(--primary);
-}
+  background-color: var(--primary10);
 
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-h1 {
-  font-size: var(--h1);
+  color: var(--secondary);
+  font-size: var(--fluid-rem);
+  font-family: 'Roboto Mono', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #app {
@@ -93,19 +213,115 @@ h1 {
   flex-direction: column;
 
   min-height: 100vh;
-  font-family: 'Roboto Mono', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+  /* color: var(--secondary); */
   text-align: center;
-  color: #2c3e50;
+  /* font-family: 'Roboto Mono', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
 }
 
-main {
-  padding: 2rem 1rem;
-  flex-grow: 1;
+h1 {
+  font-size: var(--h2);
+}
+
+h2 {
+  font-size: var(--h4);
+}
+
+h3 {
+  font-size: var(--h5);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--tertiary);
+}
+
+p {
+  line-height: 1.5;
+  max-width: 60ch;
+}
+
+label,
+input {
+  font-size: 0.9rem;
+}
+
+input {
+  padding: 1.75rem 0.75rem 0.75rem;
+
+  background-color: var(--primary15);
+  border: 5px var(--border-type, solid) var(--primary20);
+  border-radius: var(--sm-radius);
+
+  transition: var(--default-trans);
+}
+
+/* override browser stylseheets for autocomplete styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  border: 0;
+  outline: 0;
+  -webkit-text-fill-color: var(--tertiary);
+  box-shadow: 0 0 0px 1000px var(--primary15) inset;
+  -webkit-box-shadow: 0 0 0px 1000px var(--primary15) inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .bold {
   font-weight: bold;
 }
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  width: 100%;
+  max-width: 45rem;
+}
+
+main > * {
+  /* width: 100%; */
+}
+
+.route-enter-to,
+.route-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.route-enter-active {
+  transition: all 200ms ease-in;
+}
+
+.route-leave-active {
+  position: absolute;
+  transition: all 200ms ease-out;
+}
+
+.route-enter-from {
+  opacity: 0;
+  transform: translateX(3rem);
+}
+
+.route-leave-to {
+  opacity: 0;
+  transform: translateX(-3rem);
+}
+
+/* .route-move {
+  transition: transform 200ms ease;
+} */
 </style>

@@ -32,9 +32,4 @@ export default {
   setMovieDetails(state, payload) {
     state.movieDetails = payload;
   }
-  // resetParams(state) {
-  // 	state.searchParams.title = '';
-  //   state.searchParams.year = null;
-  //   state.searchParams.page = 1;
-  // }
 };

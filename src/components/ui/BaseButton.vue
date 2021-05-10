@@ -32,42 +32,56 @@ export default {
 <style scoped>
 button,
 a {
-  text-decoration: none;
-  padding: 0.75rem 1.5rem;
-  font: inherit;
-  background-color: #3a0061;
-  border: 1px solid #3a0061;
-  color: white;
-  cursor: pointer;
-  border-radius: 30px;
-  margin-right: 0.5rem;
   display: inline-block;
+  margin-right: 0.5rem;
+  /* padding: 0.5rem 1.25rem; */
+  padding: var(--pad-y, 0.5rem) var(--pad-x, 1.25rem);
+
+  font: inherit;
+  text-decoration: none;
+  text-align: center;
+  color: var(--secondary);
+
+  background-color: var(--primary15);
+  border: 3px solid var(--primary15);
+  border-radius: var(--m-radius);
+
+  cursor: pointer;
+
+  transition: var(--default-trans);
 }
 
 a:hover,
 a:active,
 button:hover,
 button:active {
-  background-color: #270041;
-  border-color: #270041;
+  background-color: var(--tertiary);
+  border-color: var(--tertiary);
+  color: var(--primary);
 }
 
 .flat {
   background-color: transparent;
-  color: #3a0061;
+  color: var(--secondary);
   border: none;
 }
 
 .outline {
+  color: var(--secondary);
   background-color: transparent;
-  border-color: #270041;
-  color: #270041;
+  border-color: var(--tertiary10);
+  border-color: var(--primary10);
 }
 
 .flat:hover,
-.flat:active,
+.flat:active {
+  background-color: var(--primary10);
+  color: var(--tertiary);
+}
+
 .outline:hover,
 .outline:active {
-  background-color: #edd2ff;
+  background-color: var(--primary10);
+  color: var(--tertiary10);
 }
 </style>

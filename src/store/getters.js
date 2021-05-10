@@ -14,6 +14,9 @@ export default {
   getNominations(state) {
     return state.nominations;
   },
+  getSumNominations(_, getters) {
+    return getters.getNominations.length;
+  },
   getTotalResults(state) {
     return state.totalResults;
   },

@@ -1,15 +1,34 @@
 <template>
   <section>
+    <!-- <base-modal :show="maxNominations" title="Nominations Full"> -->
+    <base-modal :show="maxAlert" title="Nominations Full" @close="handleAlert">
+      <template #default>
+        <p>
+          You have reached 5 nominations! You can choose review your list,
+          submit your list, or continue browsing.
+        </p>
+      </template>
+      <template #actions>
+        <base-button @click="handleAlert">Submit</base-button>
+        <base-button @click="handleAlert" link to="/nominations"
+          >Review</base-button
+        >
+        <base-button @click="handleAlert">Browse</base-button>
+      </template>
+    </base-modal>
     <base-card>
       <movie-search
         @emit-search="submitSearch"
         @emit-key="submitKey"
       ></movie-search>
     </base-card>
-    <!-- cat is the loader, for meow... -->
-    <!-- replace with a loader component/animation -->
-    <img v-if="isLoading" src="../assets/cat-loader.jpg" alt="caaaaaat" />
-    <search-results v-if="hasSearched && !isLoading"></search-results>
+    <div v-if="isLoading">
+      <base-spinner></base-spinner>
+    </div>
+    <search-results
+      v-if="hasSearched && !isLoading"
+      @check="checkNominations"
+    ></search-results>
   </section>
 </template>
 
@@ -26,11 +45,15 @@ export default {
   data() {
     return {
       isLoading: false,
+      maxAlert: false,
     };
   },
   computed: {
     hasSearched() {
       return this.$store.getters.getHasSearched;
+    },
+    sumNominations() {
+      return this.$store.getters.getSumNominations;
     },
   },
   methods: {
@@ -45,10 +68,24 @@ export default {
         year: null,
         page: 1,
       });
-      await this.$store.dispatch('fetchMovies', formData);
 
+      await this.$store.dispatch('fetchMovies', formData);
       this.isLoading = false;
+    },
+    checkNominations() {
+      if (this.sumNominations === 5) {
+        this.maxAlert = true;
+      }
+    },
+    handleAlert() {
+      this.maxAlert = false;
     },
   },
 };
 </script>
+
+<style scoped>
+section {
+  width: 100%;
+}
+</style>
