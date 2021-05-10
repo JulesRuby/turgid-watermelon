@@ -1,5 +1,5 @@
-# omdbapi
-
+# omdbAPI - Mock Nominations Site
+[Live Demo](https://sad-morse-2b9e87.netlify.app)
 ## Project setup
 ```
 npm install
